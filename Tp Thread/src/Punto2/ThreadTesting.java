@@ -3,25 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp.thread;
+package Punto2;
 
 /**
  *
  * @author carme
  */
-public class TpThread {
+public class ThreadTesting {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Cliente juan = new Cliente();
-        juan.setName("Juan Lopez");
-        Cliente ines = new Cliente();
-        ines.setName("Ines Garcia");
-        juan.start();
-        ines.start();
+        Thread miHilo = new MiEjecucion();
+        miHilo.start();
+        System.out.println("En el main");
     }
-
+/*1) En mi caso siempre a mostrado por pantalla primero el mensaje en el main, el cual nos dice que el hilo que se esta ejecutando es el del main. 
+     Solo una vez vi primero el cartel de la pila.
+    */
 }
