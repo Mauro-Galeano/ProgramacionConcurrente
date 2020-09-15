@@ -15,13 +15,16 @@ public class Vida {
     public Vida(){
         vida=10;
     }
-    public int curar(){
+    public synchronized int recibirCura(){
         return vida=vida+3;
     }
-    public int dañar(){
+    public synchronized int recibirDaño(){
         return vida=vida-3;
     }
     public int getVida(){
         return vida;
+    }
+    public void setVida(int v){
+        this.vida=v;
     }
 }
