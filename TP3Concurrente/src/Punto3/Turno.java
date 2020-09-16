@@ -11,7 +11,7 @@ package Punto3;
  */
 public class Turno {
     private int i=1;
-    private String resultado="";
+    //private String resultado="";
     public Turno(){
        
     }
@@ -37,14 +37,30 @@ public class Turno {
 //        
 //        //return resultado;
 //    }
-    public synchronized void incrementar(){
-        if(i==3){
-            i=1;
-        }else{
+//    public void incrementar(){
+//        if(i==3){
+//            i=1;
+//        }else{
+//            i++;
+//        }
+//    }
+//    public int getTurno(){
+//        return i;
+//    }
+     public synchronized void imprimir(String n){
+        if(n.equalsIgnoreCase("A") && i==1){
+            System.out.print("A");
             i++;
+        }else{
+            if(n.equalsIgnoreCase("B") && i==2){
+            System.out.print("BB");
+            i++;
+            }else{
+                if(n.equalsIgnoreCase("C") && i==3){
+                    System.out.print("CCC");
+                    i=1;
+                }
+            }
         }
-    }
-    public synchronized int getTurno(){
-        return i;
-    }
+   }
 }

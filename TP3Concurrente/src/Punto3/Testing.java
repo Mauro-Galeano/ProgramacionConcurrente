@@ -19,8 +19,8 @@ public class Testing {
         Turno t= new Turno();
         Letra l= new Letra(t);
         Thread a= new Thread(l, "A");
-        Thread b= new Thread(l, "BB");
-        Thread c= new Thread(l, "CCC");
+        Thread b= new Thread(l, "B");
+        Thread c= new Thread(l, "C");
         
         a.start();
         b.start();
