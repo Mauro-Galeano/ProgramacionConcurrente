@@ -15,11 +15,25 @@ public class Letra implements Runnable{
     public Letra(Turno t){
         this.turno=t;
     }
-    
+   
+   public void imprimir(){
+        if(Thread.currentThread().getName().equals("A") && turno.getTurno()==1){
+            System.out.print("A");
+            turno.incrementar();
+        }else{
+            if(Thread.currentThread().getName().equals("BB") && turno.getTurno()==2){
+            System.out.print("BB");
+            turno.incrementar();
+            }else{
+                if(Thread.currentThread().getName()=="CCC"&&turno.getTurno()==3){
+                    System.out.print("CCC");
+                    turno.incrementar();
+                }
+            }
+        }
+   } 
     public void run(){
-        String res;
-        res=turno.imprimir(Thread.currentThread().getName());
-        System.out.println(res);
+        this.imprimir();
     }
             
     

@@ -10,26 +10,41 @@ package Punto3;
  * @author carme
  */
 public class Turno {
-    private int i;
+    private int i=1;
     private String resultado="";
     public Turno(){
-        this.i=1;
+       
     }
     
-    public String imprimir(String n){
-        
-        if(n=="A"&&i==1){
-            resultado=resultado+n;
-            i=2;
+//    public synchronized void imprimir(String n){
+//        System.out.println("El turno es "+i);
+//        
+//        if(n.equalsIgnoreCase("A") && i==1){
+//            resultado=resultado+n;
+//            //System.out.print(n);
+//            i=2;
+//        }else{
+//            if(n.equalsIgnoreCase("BB") || (i==2)){
+//                resultado=resultado+n;
+//                System.out.print(n);
+//                i=3;
+//            }else{
+//                resultado=resultado+n;
+//                //System.out.print(n);
+//                i=1;
+//            }
+//        }
+//        
+//        //return resultado;
+//    }
+    public synchronized void incrementar(){
+        if(i==3){
+            i=1;
         }else{
-            if(n=="BB"&&i==2){
-                resultado=resultado+n;
-                i=3;
-            }else{
-                resultado=resultado+n;
-                i=1;
-            }
+            i++;
         }
-        return resultado;
+    }
+    public synchronized int getTurno(){
+        return i;
     }
 }
