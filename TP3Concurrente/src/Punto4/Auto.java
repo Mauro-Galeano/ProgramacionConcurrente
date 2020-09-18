@@ -29,7 +29,7 @@ public class Auto extends Vehiculo implements Runnable {
         try {
              if((naftaActual-x)>0){
                 naftaActual=naftaActual-x;//Donde x es numero aleatorio
-                 System.out.println("Esta andando el auto "+Thread.currentThread().getName());
+                 System.out.println("Esta andando el auto "+Thread.currentThread().getName()+" avanzo "+x+" km.");
                 Thread.sleep(x*100);
              }
         } catch (InterruptedException e) {
