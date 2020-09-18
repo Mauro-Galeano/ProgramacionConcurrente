@@ -17,18 +17,6 @@ public class Personaje implements Runnable {
         this.vida = v;
     }
 
-//    public synchronized void curar() {
-//            System.out.println("curandero cura ");
-//            vida.recibirCura();
-//            System.out.println("La vida ahora es de: " + vida.getVida());
-//    }
-//
-//    public synchronized void dañar() {
-//            System.out.println("orco ataca ");
-//            vida.recibirDaño();
-//            System.out.println("La vida ahora es de: " + vida.getVida());
-//    }
-
     public void run() {
         if (Thread.currentThread().getName().equals("orco")){
             vida.recibirDaño();
