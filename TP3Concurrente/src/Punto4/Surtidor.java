@@ -19,7 +19,7 @@ public class Surtidor {
         try{
             System.out.println("Esta cargando nafta el auto: "+Thread.currentThread().getName()+" esta cargando "+cargar );
             Thread.sleep(cargar*100);
-            System.out.println("Termino de cargar");
+            System.out.println("Termino de cargar"+Thread.currentThread().getName());
         }catch(InterruptedException e){
             
         }

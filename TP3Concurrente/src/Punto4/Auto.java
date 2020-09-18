@@ -20,12 +20,12 @@ public class Auto extends Vehiculo implements Runnable {
         this.modelo = model;
         this.patente = pat;
         this.capacidad=100;
-        this.naftaActual=35;//Random entre 1 y 50.
+        this.naftaActual=(int) (Math.random() * 50)+1;//Random entre 1 y 50.
         this.s=st;
     }
 
     public void andar() {
-        int x=34;
+        int x=(int) (Math.random()*50)+1;
         try {
              if((naftaActual-x)>0){
                 naftaActual=naftaActual-x;//Donde x es numero aleatorio
@@ -47,8 +47,8 @@ public class Auto extends Vehiculo implements Runnable {
     }
     
     public int calcularNaftaACargar(){
-        int x=34;//Este es un numero aleatorio.
         int resta=capacidad-naftaActual;
+        int x=(int) (Math.random()*resta)+1;//Este es un numero aleatorio.
         if(resta>0){
             naftaActual=naftaActual+x; //x es un numero aleatorio que va a estar entre 0 y el valor de resta
         }
