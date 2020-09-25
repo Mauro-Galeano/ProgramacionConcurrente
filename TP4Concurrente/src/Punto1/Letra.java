@@ -22,7 +22,17 @@ public class Letra implements Runnable{
    
     public void run(){
         while(true){
-        turno.imprimir(nombre,cantidadOcurrencias);
-        }
+            switch(nombre){
+                case "A":
+                    turno.imprimirA(cantidadOcurrencias);
+                    break;
+                case "B":
+                    turno.imprimirB(cantidadOcurrencias);
+                    break;
+                case "C":
+                    turno.imprimirC(cantidadOcurrencias);
+                    break;
+            }
+        }    
     }
 }

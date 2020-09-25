@@ -18,26 +18,56 @@ public class Turno {
        semB= new Semaphore(0);
        semC= new Semaphore(0);
     }
-    public void imprimir(String n,int cant){
-        if(n.equalsIgnoreCase("A") && semA.tryAcquire()){
-            for(int i=0;i<cant;i++){
+//    public void imprimir(String n,int cant){
+//        if(n.equalsIgnoreCase("A") && semA.tryAcquire()){
+//            for(int i=0;i<cant;i++){
+//                System.out.print("A");
+//            }
+//            semB.release();
+//        }else{
+//            if(n.equalsIgnoreCase("B") && semB.tryAcquire()){
+//            for(int i=0;i<cant;i++){
+//                System.out.print("B");
+//            }
+//            semC.release();
+//            }else{
+//                if(n.equalsIgnoreCase("C") && semC.tryAcquire()){
+//                    for(int i=0;i<cant;i++){
+//                        System.out.print("C");
+//                    }
+//                    semA.release();
+//                }
+//            }
+//        }
+//   }
+    public void imprimirA(int cant){
+        try{
+        semA.acquire();
+        }catch(InterruptedException e){
+        }
+        for(int i=0;i<cant;i++){
                 System.out.print("A");
             }
             semB.release();
-        }else{
-            if(n.equalsIgnoreCase("B") && semB.tryAcquire()){
-            for(int i=0;i<cant;i++){
+    }
+    public void imprimirB(int cant){
+        try{
+            semB.acquire();
+        }catch(InterruptedException e){
+        }
+        for(int i=0;i<cant;i++){
                 System.out.print("B");
             }
             semC.release();
-            }else{
-                if(n.equalsIgnoreCase("C") && semC.tryAcquire()){
-                    for(int i=0;i<cant;i++){
-                        System.out.print("C");
-                    }
-                    semA.release();
-                }
-            }
+    }
+    public void imprimirC(int cant){
+        try{
+            semC.acquire();
+        }catch(InterruptedException e){
         }
-   }
+        for(int i=0;i<cant;i++){
+                System.out.print("C");
+            }
+            semA.release();
+    }
 }
