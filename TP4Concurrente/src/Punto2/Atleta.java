@@ -12,30 +12,36 @@ package Punto2;
 public class Atleta implements Runnable {
 
     private Testigo testigo;
-
-    public Atleta(Testigo t) {
+    private String nombre;
+    //private int orden;
+    public Atleta(Testigo t, String n) {
         testigo = t;
+        nombre=n;
     }
+    
 
     public void run() {
-        int corredorNumero = (int) (Math.random() * 4) + 1;
-        try {
-            switch (corredorNumero) {
-                case 1:
-                    testigo.correrAtleta1();
-                    break;
-                case 2:
-                    testigo.correrAtleta2();
-                    break;
-                case 3:
-                    testigo.correrAtleta3();
-                    break;
-                case 4:
-                    testigo.correrAtleta4();
-                    break;
-            }
-        } catch (InterruptedException e) {
-        }
+//        try {
+//            switch (nombre) {
+//                case "Atleta0":
+//                    testigo.correrAtleta1();
+//                    break;
+//                case "Atleta1":
+//                    testigo.correrAtleta2();
+//                    break;
+//                case "Atleta2":
+//                    testigo.correrAtleta3();
+//                    break;
+//                case "Atleta3":
+//                    testigo.correrAtleta4();
+//                    break;
+//            }
+//        } catch (InterruptedException e) {
+//        }
+        
+        try{
+            testigo.correrAtleta();
+        }catch(InterruptedException e){}
     }
 
 }
