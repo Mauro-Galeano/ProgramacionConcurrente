@@ -6,26 +6,27 @@
 package Punto12;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
  * @author carme
  */
 public class Hamaca {
-    private Semaphore semH;
+    private ReentrantLock lockH;
     public Hamaca(){
-        semH= new Semaphore(1);
+        lockH=new ReentrantLock();
     }
 //    public boolean puedoDescansar(){
 //        return semH.tryAcquire();
 //    }
     public void descansar(String n){
         try{
-            semH.acquire();
+            lockH.lock();
             System.out.println("Estoy descansando, soy "+n);
             Thread.sleep((int)Math.random()*1000);
             System.out.println("Termine de descansar, soy "+n);
         }catch(InterruptedException e){}
-        semH.release();
+        lockH.unlock();
     }
 }

@@ -6,26 +6,27 @@
 package Punto12;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
  * @author carme
  */
 public class Plato {
-    private Semaphore semP;
+    private ReentrantLock lockP;
     public Plato(){
-        semP=new Semaphore(1);
+        lockP=new ReentrantLock();
     }
 //    public boolean puedoComer(){
 //        return semP.tryAcquire();
 //    }
     public void Comer(String n){
         try{
-            semP.acquire();
+            lockP.lock();
             System.out.println("Estoy comiendo, soy "+n);
             Thread.sleep((int)Math.random()*1000);
             System.out.println("Termine de comer, soy "+n);
         }catch(InterruptedException e){}
-        semP.release();
+        lockP.unlock();
     }
 }
