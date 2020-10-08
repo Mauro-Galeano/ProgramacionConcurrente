@@ -15,12 +15,6 @@ public class Mozo implements Runnable{
     public Mozo(Mesa m1){
         mesa=m1;
     }
-    private void buscarPedido(){
-        System.out.println("Estamos preparando su pedido, soy"+Thread.currentThread().getName());
-        try{
-            Thread.sleep((int)Math.random()*1000);
-        }catch(InterruptedException e){}
-    }
     private void creandoPlatosNuevos(){
         System.out.println("Estoy creando platos nuevos");
     }
