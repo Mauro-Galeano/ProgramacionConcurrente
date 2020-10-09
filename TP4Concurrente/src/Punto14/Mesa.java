@@ -13,18 +13,29 @@ import java.util.concurrent.Semaphore;
  */
 public class Mesa {
 
-    private Semaphore semMZ, semM, semE, semC;
+    private Semaphore semMZ, semM, semE, semC,semM2;
 
     public Mesa() {
         semM = new Semaphore(1);
+        semM2= new Semaphore(1);
         semMZ = new Semaphore(0);
         semC = new Semaphore(0);
         semE = new Semaphore(0);
     }
 
     //Metodos del Empleado
-    public void sentarme() throws InterruptedException{
-        semM.acquire();
+    public int sentarme() throws InterruptedException{
+        int num=0;
+        if(semM.tryAcquire()){
+            System.out.println("Pude sentarme en la mesa 1, soy " + Thread.currentThread().getName());
+            num=1;
+        }else{
+            if(semM2.tryAcquire()){
+                System.out.println("Pude sentarme en la mesa 2, soy " + Thread.currentThread().getName());
+                num=2;
+            }
+        }
+        return num;
     }
     
     public void solicitarAtencionAlMozo() throws InterruptedException {
@@ -61,9 +72,18 @@ public class Mesa {
         System.out.println("Soy "+Thread.currentThread().getName()+" termine de comer");
     }
     
-    public void retirarmeDeLaMesa() {
+    public void retirarmeDeLaMesa(int sillaALiberar) {
         System.out.println("La comida estuvo muy rica, muchas gracias por su atencion, soy " + Thread.currentThread().getName()+" me retiro.");
-        semM.release();
+        switch(sillaALiberar){
+            case 1:
+                System.out.println("Silla 1 libre");
+                semM.release();
+                break;
+            case 2:
+                System.out.println("Silla 2 libre");
+                semM2.release();
+                break;
+        }
     }
     
     //Metodos del mozo

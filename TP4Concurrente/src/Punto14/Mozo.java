@@ -10,7 +10,7 @@ package Punto14;
  * @author carme
  */
 public class Mozo implements Runnable {
-     private Mesa mesa;
+     private Mesa mesa,mesa2;
     
     public Mozo(Mesa m1){
         mesa=m1;
