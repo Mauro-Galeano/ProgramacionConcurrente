@@ -9,14 +9,20 @@ package teoriaconcurrente;
  *
  * @author carme
  */
-public class Consumidor implements Runnable{
+public class Consumidor implements Runnable {
+
     private BufferLimitado buffer;
-    public Consumidor(BufferLimitado bf){
-        buffer=bf;
+
+    public Consumidor(BufferLimitado bf) {
+        buffer = bf;
     }
-    public void run(){
-        try{
-            buffer.sacar();
-        }catch(InterruptedException e){}
+
+    public void run() {
+        while (true) {
+            try {
+                buffer.sacar();
+            } catch (InterruptedException e) {
+            }
+        }
     }
 }

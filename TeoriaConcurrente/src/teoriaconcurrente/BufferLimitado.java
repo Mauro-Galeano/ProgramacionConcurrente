@@ -12,37 +12,48 @@ import java.util.concurrent.Semaphore;
  * @author carme
  */
 public class BufferLimitado {
-    private Semaphore semAcceso,semCapacidad;
-    private int capacidad,cont;
-    public BufferLimitado(int n){
-        semAcceso= new Semaphore(1);
-        semCapacidad=new Semaphore(0);
-        capacidad=n;//capacidad maxima
-        cont=0;//capacidad actual
-    }
-    public void sacar()throws InterruptedException{
-        semAcceso.acquire();
-        System.out.println("La cantidad de elementos del buffer es: "+cont);//semCapacidad.availablePermits());
-        System.out.println("Soy "+Thread.currentThread().getName()+" estoy consumiendo un elemento");
-        Thread.sleep(1000);
-        semCapacidad.acquire();
-        cont--;
-        System.out.println("La cantidad de elementos del buffer despues de consumir es: "+cont);//semCapacidad.availablePermits());
 
-        semAcceso.release();
+    private Semaphore semProd, semC, semB,mutex;
+    private int capacidad, cont;
+
+    public BufferLimitado(int n) {
+        semProd = new Semaphore(0);
+        semC = new Semaphore(0);
+        semB = new Semaphore(0);
+        mutex=new Semaphore(1);
+        capacidad = n;//capacidad maxima
     }
-    public void agregar()throws InterruptedException{
-        semAcceso.acquire();
-        if(cont<capacidad){
-            System.out.println("La cantidad de elementos del buffer es: "+cont);//semCapacidad.availablePermits());
-            System.out.println("Soy "+Thread.currentThread().getName()+" estoy agregando un elemento");
+
+    public void sacar() throws InterruptedException {
+        if (semB.availablePermits() > 0) {
+            //semC.acquire();
             Thread.sleep(1000);
-            semCapacidad.release();
-            cont++;
-            System.out.println("La cantidad de elementos del buffer despues de agregar es: "+cont);//semCapacidad.availablePermits());
-        }else{
-            System.out.println("El buffer ya esta lleno");
+            mutex.acquire();
+            semB.acquire();
+            System.out.println("Soy " + Thread.currentThread().getName() + " estoy consumiendo un elemento, la cantidad de elementos del buffer ahora es: " + semB.availablePermits());
+            mutex.release();
+            semProd.release();
+        } else {
+            System.out.println("Soy "+Thread.currentThread().getName()+" el buffer esta vacio, debo esperar a que agreguen productos");
+            //semProd.release();
+            semC.acquire();//bloqueo al consumidor hasta que agreguen algun producto
         }
-        semAcceso.release();
+    }
+
+    public void agregar() throws InterruptedException {
+        if (semB.availablePermits() < capacidad) {
+            //semProd.acquire();
+            Thread.sleep(1000);
+            mutex.acquire();
+            semB.release();
+            System.out.println("Soy " + Thread.currentThread().getName() + " estoy agregando un elemento, la cantidad de elementos del buffer ahora es: "+ semB.availablePermits());
+            mutex.release();
+            semC.release();
+        } else {
+            System.out.println("Soy "+Thread.currentThread().getName()+" el buffer esta lleno debo esperar a que consuman");
+            //semC.release();
+            semProd.acquire();//Para bloquear al productor en caso de que no haya espacio para agregar.
+        }
+        
     }
 }
