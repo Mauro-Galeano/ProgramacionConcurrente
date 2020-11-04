@@ -55,9 +55,6 @@ public class Pista {
             semDespegar.release();
             prioridad=true;
             semAterrizar.acquire();//trabo al avion que quiere aterrizar xq la prioridad pasa a ser del q quiere despegar.
-            System.out.println("ESTOY TRABADO Y NOSE XQ!!!!!!");
-            System.out.println(semAterrizar.availablePermits());
-            System.out.println(semAterrizajes.availablePermits());
             //Creo que no funciona xq una vez que logra tomar el permiso de aterrizar, no tiene nada para hacer, tal vez se soluciona con
             //while(true) en el run de aviones.
             //Tiene un problema, y es q cuando tienen prioridad los que depegan, debe despegar uno solo y volver a la normalidad
@@ -69,7 +66,7 @@ public class Pista {
     public void despegar(int n) throws InterruptedException {
         System.out.println("Estoy en tierra quiero despegar, soy " + Thread.currentThread().getName());
         comunicarmeConLaTorre(n);
-        if (aux.localizar(1) != (-1) && !prioridad) {//Me fijo si hay alguno que quiere despegar, en caso de que el localizar me devuelva algo distinto de -1 entonces alguien quere aterrizar
+        if (aux.localizar(1) != (-1)) {//Me fijo si hay alguno que quiere despegar, en caso de que el localizar me devuelva algo distinto de -1 entonces alguien quere aterrizar
             System.out.println("Soy " + Thread.currentThread().getName() + " no puedo despegar, hay alguien que quiere aterrizar, debo esperar");
             semDespegar.acquire();//tomo el semaforo para que se trabe en caso de que alguien quiera aterrizar
             semPista.acquire();
