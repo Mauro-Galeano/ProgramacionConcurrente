@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         int x=(int)(Math.random()*2)+1;
-        Comedor comedor=new Comedor(2, x, 3, 3);
+        Comedor comedor=new Comedor(2, x, 3, 3);//el 1er numero es la cantidad de comederos, el 2do es la cantidad de perros y el 3ro la cantidad de gatos
         Perro[] colPerros= new Perro[3];
         Thread[] colHilosPerros=new Thread[3];
         Gato[] colGatos= new Gato[3];
