@@ -18,21 +18,23 @@ public class TP5Concurrente {
         // TODO code application logic here
         int x=(int)(Math.random()*2)+1;
         Comedor c=new Comedor(5,x,2,3);//el 1er numero es la cantidad de comederos, el 2do es la cantidad de perros y el 3ro la cantidad de gatos
-        Perro p1= new Perro(c);
-        Perro p2= new Perro(c);
-        Thread h1= new Thread(p1,"Perro 1");
-        Thread h2= new Thread(p2,"Perro 2");
-        Gato g1= new Gato(c);
-        Gato g2= new Gato(c);
-        Gato g3= new Gato(c);
-        Thread h3= new Thread(g1,"Gato 1");
-        Thread h4= new Thread(g2,"Gato 2");
-        Thread h5= new Thread(g3,"Gato 3");
-        h1.start();
-        h2.start();
-        h3.start();
-        h4.start();
-        h5.start();
+        Perro[] colPerros= new Perro[2];
+        Thread[] colHilosPerros=new Thread[2];
+        Gato[] colGatos= new Gato[3];
+        Thread[] colHilosGatos=new Thread[3];
+        for(int i=0;i<2;i++){//Para los Perros
+            colPerros[i]=new Perro(c);
+            colHilosPerros[i]=new Thread(colPerros[i], "Perro "+i);
+        }
+        for(int j=0;j<3;j++){//Para los gatos
+            colGatos[j]=new Gato(c);
+            colHilosGatos[j]=new Thread(colGatos[j], "Gato "+j);
+        }
+        for(int k=0;k<2;k++){//start de los perros
+            colHilosPerros[k].start();
+        }
+        for(int m=0;m<3;m++){//start de los gatos
+            colHilosGatos[m].start();
+        }
     }
-    
 }
