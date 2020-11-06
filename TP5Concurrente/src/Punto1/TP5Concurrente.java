@@ -16,7 +16,8 @@ public class TP5Concurrente {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Comedor c=new Comedor(2);
+        int x=(int)(Math.random()*2)+1;
+        Comedor c=new Comedor(5,x,2,3);//el 1er numero es la cantidad de comederos, el 2do es la cantidad de perros y el 3ro la cantidad de gatos
         Perro p1= new Perro(c);
         Perro p2= new Perro(c);
         Thread h1= new Thread(p1,"Perro 1");

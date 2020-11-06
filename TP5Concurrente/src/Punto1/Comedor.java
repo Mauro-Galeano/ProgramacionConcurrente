@@ -6,6 +6,7 @@
 package Punto1;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -15,71 +16,60 @@ public class Comedor {
 
     private Semaphore cantComederos, mutex, semPerros, semGatos;
     private char turno = 'p';
-    private int cantPlatosUsados, cantTotal;
-
-    public Comedor(int cant) {
+    private int cantPlatosUsados, cantTotal,cantPerros,cantGatos;
+    public Comedor(int cant,int empieza,int cp,int cg) {
         cantPlatosUsados = 0;
         cantTotal = cant;
         cantComederos = new Semaphore(cantTotal);
         mutex = new Semaphore(1);
-        semPerros = new Semaphore(cantTotal);
-        semGatos = new Semaphore(0);
-    }
-
-    public boolean puedoEntrarPerro() {
-        return (turno == 'p');
+        cantPerros=cp;
+        cantGatos=cg;
+        if(empieza==1){//si es 1 entran primero los perros
+            semPerros = new Semaphore(cantTotal);
+            semGatos = new Semaphore(0);
+        }else{//si es 2 entran primero los gatos
+            semPerros = new Semaphore(0);
+            semGatos = new Semaphore(cantTotal);
+        }
     }
 
     public void comerPerro() throws InterruptedException {
-        //semBloqueo.acquire();//Para trabar a los gatos, ya que entro primero un perro.
-        
-            semPerros.acquire();
-            mutex.acquire();
-            if (cantPlatosUsados<cantTotal) {
-                System.out.println("Soy " + Thread.currentThread().getName() + " entre al comedor, ya puedo comer");
-                cantComederos.acquire();
-                cantPlatosUsados++;
-                //System.out.println(cantPlatosUsados);
-                Thread.sleep(2500);
-            }
-            mutex.release();
-        
-
-    }
-
-    public void terminarDeComerPerro() throws InterruptedException {
+        semPerros.acquire();
         mutex.acquire();
-        cantComederos.release();
-        cantPlatosUsados--;
-        System.out.println("Soy " + Thread.currentThread().getName() + " termine de comer, me voy.");
-        System.out.println(cantPlatosUsados);
-        if (cantPlatosUsados == 0) {
-            turno = 'g';
-            semGatos.release(cantTotal);
+        if (cantPlatosUsados < cantTotal) {
+            System.out.println("Soy " + Thread.currentThread().getName() + " entre al comedor, ya puedo comer");
+            cantPlatosUsados++;
+            Thread.sleep(2500);
         }
         mutex.release();
     }
 
-    public boolean puedoEntrarGato() {
-        //System.out.println(turno);
-        return (turno =='g');
-    }
-
-    public void comerGato() throws InterruptedException {
-        
-            semGatos.acquire();
-            mutex.acquire();
-            if (cantPlatosUsados<cantTotal) {
-                System.out.println("Soy " + Thread.currentThread().getName() + " entre al comedor, ya puedo comer");
-                //cantComederos.acquire();
-                cantPlatosUsados++;
-                Thread.sleep(2500);
+    public void terminarDeComerPerro() throws InterruptedException {
+        mutex.acquire();
+        cantPlatosUsados--;
+        System.out.println("Soy " + Thread.currentThread().getName() + " termine de comer, me voy.");
+        cantPerros--;
+        if (cantPlatosUsados == 0) {
+            if(cantGatos>0){
+                semGatos.release(cantTotal);
+            }else{
+                semPerros.release(cantTotal);
             }
-            mutex.release();
-        //}else{
-            //System.out.println("No puedo entrar hay perros comiendo, soy "+Thread.currentThread().getName());
-            //semGatos.acquire();
-        
+            
+        }
+        mutex.release();
+    }
+    
+    public void comerGato() throws InterruptedException {
+
+        semGatos.acquire();
+        mutex.acquire();
+        if (cantPlatosUsados < cantTotal) {
+            System.out.println("Soy " + Thread.currentThread().getName() + " entre al comedor, ya puedo comer");
+            cantPlatosUsados++;
+            Thread.sleep(2500);
+        }
+        mutex.release();
     }
 
     public void terminarDeComerGato() throws InterruptedException {
@@ -87,10 +77,14 @@ public class Comedor {
         cantComederos.release();
         cantPlatosUsados--;
         System.out.println("Soy " + Thread.currentThread().getName() + " termine de comer, me voy.");
+        cantGatos--;
         if (cantPlatosUsados == 0) {
-            turno = 'p';
-            //System.out.println("el turno es de "+turno);
-            semPerros.release(cantTotal);
+            if(cantPerros>0){
+                semPerros.release(cantTotal);
+            }else{
+                semGatos.release(cantTotal);
+            }
+            
         }
         mutex.release();
     }
