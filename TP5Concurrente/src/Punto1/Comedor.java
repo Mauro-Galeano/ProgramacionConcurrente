@@ -14,12 +14,11 @@ import java.util.concurrent.Semaphore;
  */
 public class Comedor {
 
-    private Semaphore cantComederos, mutex, semPerros, semGatos;
+    private Semaphore mutex, semPerros, semGatos;
     private int cantPlatosUsados, cantTotal,cantPerros,cantGatos;
     public Comedor(int cant,int empieza,int cp,int cg) {
         cantPlatosUsados = 0;
         cantTotal = cant;
-        cantComederos = new Semaphore(cantTotal);
         mutex = new Semaphore(1);
         cantPerros=cp;
         cantGatos=cg;
@@ -38,7 +37,7 @@ public class Comedor {
         if (cantPlatosUsados < cantTotal) {
             System.out.println("Soy " + Thread.currentThread().getName() + " entre al comedor, ya puedo comer");
             cantPlatosUsados++;
-            Thread.sleep(2500);
+            Thread.sleep(2500);//simula que come
         }
         mutex.release();
     }
@@ -66,14 +65,13 @@ public class Comedor {
         if (cantPlatosUsados < cantTotal) {
             System.out.println("Soy " + Thread.currentThread().getName() + " entre al comedor, ya puedo comer");
             cantPlatosUsados++;
-            Thread.sleep(2500);
+            Thread.sleep(2500);//simula que come
         }
         mutex.release();
     }
 
     public void terminarDeComerGato() throws InterruptedException {
         mutex.acquire();
-        cantComederos.release();
         cantPlatosUsados--;
         System.out.println("Soy " + Thread.currentThread().getName() + " termine de comer, me voy.");
         cantGatos--;
