@@ -6,7 +6,6 @@
 package IncisoB;
 
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -24,14 +23,14 @@ public class Pista {
         nombre = n;
         semDespegar = new Semaphore(0);//semaforo para trabar al que quiere despegar en caso de ser necesario
         semPista = new Semaphore(1);//es para controlar que solo un avion este en la pista.
-        semComunicacion = new Semaphore(1);//mutex para comunicacion con la central, puede ser un lock.
+        semComunicacion = new Semaphore(1);//mutex para comunicacion con la central.
         semAterrizajes = new Semaphore(2);//semaforo con la cantidad de aterrizajes.
         semAterrizar= new Semaphore(0);//semaforo para trabar al que quiere aterrizar en caso de ser necesario.
     }
 
     private void comunicarmeConLaTorre(int n) throws InterruptedException {
         //System.out.println("Me comunique con la central para pedir autorizacion, soy: " + Thread.currentThread().getName());
-        semComunicacion.acquire();//creo que esto podria hacerlo con un lock.
+        semComunicacion.acquire();
         aux.insertar(n, i);//n es el numero que se genera random en avion, de esta manera luego podre buscar si hay alguno que quiera aterrizar, que es el 1.
         i++;
         semComunicacion.release();
@@ -64,11 +63,6 @@ public class Pista {
                 semDespegar.release();
             }
             semPista.release();
-            //trabo al avion que quiere aterrizar xq la prioridad pasa a ser del q quiere despegar.
-            //Creo que no funciona xq una vez que logra tomar el permiso de aterrizar, no tiene nada para hacer, tal vez se soluciona con
-            //while(true) en el run de aviones.
-            //Tiene un problema, y es q cuando tienen prioridad los que depegan, debe despegar uno solo y volver a la normalidad
-            //pero despegan todos y despues aterrizan
         }
     }
 
