@@ -18,14 +18,10 @@ public class Gato implements Runnable {
     }
 
     public void run() {
-        //while (true) {
-            try {
-                //if (comedero.puedoEntrarGato()) {
-                    comedero.comerGato();
-                    comedero.terminarDeComerGato();
-                //}
-            } catch (InterruptedException e) {
-            }
-        //}
+        try {
+            comedero.comerGato();
+            comedero.terminarDeComerGato();
+        } catch (InterruptedException e) {
+        }
     }
 }

@@ -18,14 +18,9 @@ public class Perro implements Runnable {
     }
 
     public void run() {
-        //while (true) {
-            try {
-                //if (comedero.puedoEntrarPerro()) {
-                    comedero.comerPerro();
-                    comedero.terminarDeComerPerro();
-                //}
-            } catch (InterruptedException e) {
-            }
-        //}
+        try {
+            comedero.comerPerro();
+            comedero.terminarDeComerPerro();
+        } catch (InterruptedException e) {}
     }
 }
