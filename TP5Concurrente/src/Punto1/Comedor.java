@@ -6,7 +6,7 @@
 package Punto1;
 
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 /**
  *
@@ -15,7 +15,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Comedor {
 
     private Semaphore cantComederos, mutex, semPerros, semGatos;
-    private char turno = 'p';
     private int cantPlatosUsados, cantTotal,cantPerros,cantGatos;
     public Comedor(int cant,int empieza,int cp,int cg) {
         cantPlatosUsados = 0;
