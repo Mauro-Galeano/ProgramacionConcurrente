@@ -23,6 +23,7 @@ public class Saludo {
     }
 
     synchronized void esperarJefe(String empleado) {
+        System.out.println(empleado+" llega");
         llegaron++;
         if (llegaron == 5) {
             this.notifyAll();
@@ -37,7 +38,8 @@ public class Saludo {
         System.out.println(empleado + "> Buenos dias jefe!");
     }
 
-    synchronized void saludoJefe(int numEmp) throws InterruptedException {
+    synchronized void saludoJefe(int numEmp,String nombre) throws InterruptedException {
+        System.out.println(nombre+" llega");
         if (llegaron < numEmp) {
             System.out.println("...ESPERANDO...");
             this.wait();

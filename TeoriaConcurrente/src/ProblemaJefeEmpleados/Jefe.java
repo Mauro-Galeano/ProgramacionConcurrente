@@ -23,7 +23,7 @@ public class Jefe implements Runnable{
     
     public void run(){
         try{
-            saludo.saludoJefe(numEmp);
+            saludo.saludoJefe(numEmp,nombre);
         }catch(InterruptedException e){}
     }
 }

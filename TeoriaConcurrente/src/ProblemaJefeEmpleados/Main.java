@@ -14,7 +14,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
         // TODO code application logic here
         String[] nombresEmpleados = {"Pablo", "Luis", "Andrea",
             "Pedro", "Paula"};
@@ -27,6 +27,10 @@ public class Main {
         for (int i = 0; i < 6; i++) {
             elPersonal[i].start();
         }
+        for (int i = 0; i < 6; i++) {
+            elPersonal[i].join();
+        }
+        System.out.println("LISTO, ahora que todos han saludado - a trabajar");
     }
 
 }
