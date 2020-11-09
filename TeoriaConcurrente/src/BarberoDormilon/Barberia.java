@@ -19,7 +19,6 @@ public class Barberia {
         semBarbero = new Semaphore(0);
         semBarberia = new Semaphore(1, true);
         semCliente = new Semaphore(0, true); //Para la silla donde el barbero corta el pelo 
-        //¿por que un barbero corta el pelo?
         //semEsperas = new Semaphore(5, true); //Para las sillas para esperar
     }
 
