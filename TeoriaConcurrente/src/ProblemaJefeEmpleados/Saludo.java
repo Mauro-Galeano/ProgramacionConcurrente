@@ -13,13 +13,12 @@ import java.util.concurrent.Semaphore;
  */
 public class Saludo {
 
-    private int llegaron;
-    private Semaphore semJefe;
+    private int llegaron,cantSaludos;
     private boolean saludar = false;
 
     public Saludo() {
         llegaron = 0;
-        semJefe = new Semaphore(0);
+        cantSaludos=0;
     }
 
     synchronized void esperarJefe(String empleado) {
@@ -36,6 +35,11 @@ public class Saludo {
             }
         }
         System.out.println(empleado + "> Buenos dias jefe!");
+        //forma 2 de mostrar el cartel.
+//        cantSaludos++;
+//        if(cantSaludos==5){
+//            System.out.println("LISTO, ahora que todos han saludado - a trabajar");
+//        }
     }
 
     synchronized void saludoJefe(int numEmp,String nombre) throws InterruptedException {
