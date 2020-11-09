@@ -13,6 +13,7 @@ import java.util.concurrent.Semaphore;
  */
 public class Barberia {
      Semaphore semBarbero, semBarberia, semCliente, semEsperas;
+     
 
     public Barberia() {
         semBarbero = new Semaphore(0);
@@ -27,7 +28,7 @@ public class Barberia {
         return (semBarberia.tryAcquire());
     }
 
-    public void solicitoCorte(String nombreCliente) {
+    public synchronized void solicitoCorte(String nombreCliente) {
         System.out.println("Soy el cliente " + nombreCliente + " quiero atenderme");
         semBarbero.release();
         System.out.println("Soy " + nombreCliente + ", y me están cortando el pelo!");
