@@ -17,10 +17,10 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         Buffer buffer=new Buffer(1, 1);
-        ImpresoraA impA1=new ImpresoraA(buffer);
-        ImpresoraA impA2=new ImpresoraA(buffer);
-        ImpresoraB impB1=new ImpresoraB(buffer);
-        ImpresoraB impB2=new ImpresoraB(buffer);
+        UsuarioA impA1=new UsuarioA(buffer);
+        UsuarioA impA2=new UsuarioA(buffer);
+        UsuarioB impB1=new UsuarioB(buffer);
+        UsuarioB impB2=new UsuarioB(buffer);
         Thread a1= new Thread(impA1, "Impresora A1");
         Thread a2= new Thread(impA2, "Impresora A2");
         Thread b1= new Thread(impB1, "Impresora B1");

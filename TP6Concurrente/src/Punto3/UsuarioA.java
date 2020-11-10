@@ -9,15 +9,16 @@ package Punto3;
  *
  * @author carme
  */
-public class ImpresoraB implements Runnable{
+public class UsuarioA implements Runnable{
+    
     private Buffer buffer;
-    public ImpresoraB(Buffer bf){
+    public UsuarioA(Buffer bf){
         buffer=bf;
     }
     public void run(){
         try{
-            buffer.imprimirEnB('B');
-            buffer.terminarDeImprimirB();
+            buffer.imprimirEnA('A');
+            buffer.terminarDeImprimirA();
         }catch(InterruptedException e){}
     }
 }
