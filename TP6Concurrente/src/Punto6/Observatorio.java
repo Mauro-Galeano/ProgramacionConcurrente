@@ -10,16 +10,16 @@ package Punto6;
  * @author carme
  */
 public class Observatorio {
-    private int capacidad,cantPersonasDentro,visitantes,investigadores;
+    private int capacidad,cantPersonasDentro,visitantes;
+    private boolean hayInvestigador=false;
     public Observatorio(){
         capacidad=25;
         cantPersonasDentro=0;
         visitantes=0;
-        investigadores=0;
     }
     
     public synchronized void entrarVisitante()throws InterruptedException{
-        while(cantPersonasDentro>capacidad || investigadores>0){
+        while(cantPersonasDentro>capacidad || hayInvestigador){
             System.out.println("Soy "+Thread.currentThread().getName()+"(visitante) no puedo entrar esta lleno");
             this.wait();
         }
@@ -34,7 +34,7 @@ public class Observatorio {
         this.notifyAll();
     }
     public synchronized void entrarEnSilla()throws InterruptedException{
-        while(cantPersonasDentro>10 || investigadores>0){
+        while(cantPersonasDentro>10 || hayInvestigador){
             System.out.println("Soy "+Thread.currentThread().getName()+" estoy en silla de ruedas no puedo entrar porque hay mas de 30 personas");
             this.wait();
         }
@@ -51,7 +51,7 @@ public class Observatorio {
         this.notifyAll();
     }
     public synchronized void entrarMantenimiento()throws InterruptedException{
-        while(visitantes>0 || investigadores>0 || cantPersonasDentro>capacidad){
+        while(visitantes>0 || hayInvestigador || cantPersonasDentro>capacidad){
             System.out.println("Soy "+Thread.currentThread().getName()+"(mantenimiento) no puedo entrar debo esperar");
             this.wait();
         }
@@ -64,18 +64,18 @@ public class Observatorio {
         this.notifyAll();
     }
     public synchronized void entrarInvestigador()throws InterruptedException{
-        while(cantPersonasDentro>0){
+        while(cantPersonasDentro>0 || hayInvestigador){
             System.out.println("Soy "+Thread.currentThread().getName()+"(investigador) hay gente en el observatorio debo esperar a que salgan");
             this.wait();
         }
         System.out.println("Soy "+Thread.currentThread().getName()+"(investigador) entre al observatorio");
         cantPersonasDentro++;
-        investigadores++;
+        hayInvestigador=true;
     }
     public synchronized void salirObservatoriInvestigadoro(){
         System.out.println("Soy "+Thread.currentThread().getName()+"(investigador) me voy");
         cantPersonasDentro--;
-        investigadores--;
+        hayInvestigador=false;
         this.notifyAll();
     }
 }
