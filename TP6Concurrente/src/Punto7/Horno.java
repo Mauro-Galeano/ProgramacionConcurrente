@@ -12,10 +12,14 @@ package Punto7;
 public class Horno implements Runnable{
     private Cinta cinta;
     
+    public Horno(Cinta c){
+        cinta=c;
+    }
     public void run(){
         while(true){
             try{
             cinta.dejarPastelEnCinta();
+            Thread.sleep(2500);
         }catch(InterruptedException e){}
         }
     }

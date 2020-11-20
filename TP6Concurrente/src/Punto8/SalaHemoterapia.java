@@ -16,14 +16,14 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author carme
  */
 public class SalaHemoterapia {
-    private Lock accesoCamillas,accesoSalaEspera;
+    private Lock accesoCamillas,accesoRevista;
     private Condition camilla,revista;
     private int contCamillas,contRevistas;
     public SalaHemoterapia(){
         accesoCamillas= new ReentrantLock();
         camilla= accesoCamillas.newCondition();
-        accesoSalaEspera= new ReentrantLock();
-        revista= accesoSalaEspera.newCondition();
+        //accesoRevista= new ReentrantLock();
+        //revista= accesoRevista.newCondition();
         contCamillas=0;
         contRevistas=0;
     }
@@ -72,4 +72,10 @@ public class SalaHemoterapia {
     }
     //puedo agregar el soltar revista y que cuando suelte una revista hacer camilla.signal() y de esta manerava a verificar si puede antenderse
     //y como no va a poder va a intentar una revista nuevamente?.
+//    private void soltarRevista(){
+//        accesoCamillas.lock();
+//        System.out.println("Soy "+Thread.currentThread().getName()+"");
+//        camilla.signal();
+//        accesoCamillas.unlock();
+//    }
 }
