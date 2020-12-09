@@ -29,12 +29,13 @@ public class BufferPrimario {
         lockLectura=new ReentrantLock();
         lectura= lockLectura.newCondition();
     }
-
+    //lock solo para cada buffer. tanto para escribir como para leer, y uno general para la cola
     public void escribir(char aEscribir) {
         boolean bandera=false;
         lockEscrituraP.lock();
         if (capacidadMaxima <= capacidadActual) {//puedo usar tryLock()??
             System.out.println("Soy " + Thread.currentThread().getName() + " el buffer primario esta lleno, se guarda " + aEscribir + " en el secundario");
+            //liberar escritura primaria. y usar escritura secundaria
             this.escribirEnSecundaria(aEscribir);
         } else {
             cola.poner(aEscribir);
@@ -73,10 +74,11 @@ public class BufferPrimario {
         return exito;
     }
 
-    public void imprimir() throws InterruptedException {
+    public void imprimir() throws InterruptedException {//se dormiria sobre el lock de la cola, si esta vacia se duerme sobre el buffer de la cola.
         lockLectura.lock();
         while (cola.esVacia()) {//verifico si hay algo en la cola para imprimir
             System.out.println("Soy " + Thread.currentThread().getName() + " no puedo imprimir, no hay nada en los buffers");
+            //agergar sleep para simular escritura
             lectura.await();
         }
         char x = (char) cola.obtenerFrente();

@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Punto1Tema4;
+package Punto1Tema1;
 
 /**
  *
  * @author carme
  */
-public class Ensamblador implements Runnable{
-    private Taller taller;
-    public Ensamblador(Taller t){
-        taller=t;
+public class Extractor implements Runnable{
+    private Buffer buffer;
+    
+    public Extractor(Buffer b){
+        buffer=b;
     }
     public void run(){
         while(true){
             try{
-                taller.armarSueter();
+                buffer.extraer();
             }catch(InterruptedException e){}
         }
     }

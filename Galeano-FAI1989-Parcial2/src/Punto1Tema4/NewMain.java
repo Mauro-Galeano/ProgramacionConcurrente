@@ -16,7 +16,7 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Taller taller=new Taller(2, 3);
+        Taller taller=new Taller(2, 3);//2 es el maximo de mangas y 3 el de cuerpos
         Costurera costurera=new Costurera(taller);
         ArmadorDeCuerpos armador=new ArmadorDeCuerpos(taller);
         Ensamblador ensamblador=new Ensamblador(taller);
