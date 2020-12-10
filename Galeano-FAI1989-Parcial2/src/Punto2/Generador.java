@@ -16,8 +16,10 @@ public class Generador {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int capcidadMaxima=5;
+        int capcidadMaxima=2;
         Buffer bf=new Buffer(capcidadMaxima);
+        ArmadorDeAtomosDeAgua armador=new ArmadorDeAtomosDeAgua(bf);
+        Thread a= new Thread(armador, " Armador");
         Oxigeno[] colOxigenos=new Oxigeno[3];
         Hidrogeno[] colHidrogenos=new Hidrogeno[6];
         Thread[] colHO=new Thread[3];
@@ -30,6 +32,7 @@ public class Generador {
             colHidrogenos[i]=new Hidrogeno(bf);
             colHH[i]=new Thread(colHidrogenos[i], "Hidrogeno"+i);
         }
+        a.start();
         for(int i=0;i<colHH.length;i++){
             colHH[i].start();
         }

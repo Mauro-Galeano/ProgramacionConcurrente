@@ -24,39 +24,49 @@ public class Buffer{
         capacidadActual=0;
     }
     
-    public void encontrarHidrogeno()throws InterruptedException{
-        hidrogenos.acquire(2);
-        System.out.println("Soy "+Thread.currentThread().getName()+" me junte con dos hidrogenos");
+    private void encontrarHidrogeno()throws InterruptedException{
+        hidrogenos.acquire();
+        //System.out.println("Soy "+Thread.currentThread().getName()+" me junte con dos hidrogenos");
         this.hacerAgua();
     }
-//    public void encontrarOxigeno()throws InterruptedException{
-//        oxigenos.acquire();
-//        System.out.println("Soy "+Thread.currentThread().getName()+" me junte con un oxigeno");
-//    }
+    private void encontrarOxigeno()throws InterruptedException{
+        oxigenos.acquire();
+        //System.out.println("Soy "+Thread.currentThread().getName()+" me junte con un oxigeno");
+    }
     public void oListo(){
-        System.out.println("Soy "+Thread.currentThread().getName()+" estoy listo para hacerme agua");
-        //oxigenos.release();
+        System.out.println("Soy "+Thread.currentThread().getName()+" estoy listo");
+        oxigenos.release();
     }
     public void hListo(){
-        System.out.println("Soy "+Thread.currentThread().getName()+" estoy listo para hacerme agua");
+        System.out.println("Soy "+Thread.currentThread().getName()+" estoy listo");
         hidrogenos.release();
     }
-    private void hacerAgua(){
-        System.out.println("Soy "+Thread.currentThread().getName()+" me hice agua");
+    public void hacerAgua(){
+        //System.out.println("Soy "+Thread.currentThread().getName()+" me hice agua");
         try{
+            //this.encontrarOxigeno();
+            //this.encontrarHidrogeno();
+            oxigenos.acquire();
+            System.out.println("Agarre un oxigeno");
+            hidrogenos.acquire(2);
+            System.out.println("Agarre dos hidrogenos");
+            Thread.sleep(2500);
+            System.out.println("Se formo un atomo de agua");
             this.cargarRecipiente();
         }catch(InterruptedException e){}
     }
     private void cargarRecipiente()throws InterruptedException{
         mutex.acquire();
-        if(capacidadActual>capacidad){
+        if(capacidadActual>=capacidad){
             System.out.println("Deben cambiar el recipiente, esta lleno");
             capacidadActual=0;
-            Thread.sleep((int)Math.random()*capacidadActual);//simulo el cambio de recipiente
+            Thread.sleep(3000);//simulo el cambio de recipiente
             System.out.println("El recipiente se cambio");
-        }else{
-            capacidadActual=capacidadActual+1;
         }
+            capacidadActual=capacidadActual+1;
+            System.out.println("Se agrego el agua al recipiente, la capacidad actual es de:"+capacidadActual);
+            
+        
         mutex.release();
     }
 }

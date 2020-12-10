@@ -20,11 +20,11 @@ public class Oxigeno implements Runnable {
     @Override
     public void run() {
 
-        try {
+//        try {
             buffer.oListo();
-            buffer.encontrarHidrogeno();
-        } catch (InterruptedException e) {
-        }
+            //buffer.encontrarHidrogeno();
+//        } catch (InterruptedException e) {
+//        }
 
     }
 }
