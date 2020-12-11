@@ -34,9 +34,9 @@ public class Buffer {
             lockC1.lock();
             System.out.println("Soy "+Thread.currentThread().getName()+" inserte en la cola 1 el elemento "+elemento);
             cola1.poner(elemento);
-            //hayAlguienParaInsertar--;
-            //&&hayAlguienParaInsertar==0
-            if(cola2.esVacia()){//si no hay nadie mas para insertar y la cola de extraccion esta vacia entonces cambio la funcion de las colas
+            hayAlguienParaInsertar--;
+            //
+            if(cola2.esVacia()&&hayAlguienParaInsertar==0){//si no hay nadie mas para insertar y la cola de extraccion esta vacia entonces cambio la funcion de las colas
                 System.out.println("Ahora la cola para insertar es la cola 2");
                 estado=2;//cambio de estado, ahora la cola 2 es en la que se inserta.
             }
@@ -46,9 +46,9 @@ public class Buffer {
             lockC2.lock();
             System.out.println("Soy "+Thread.currentThread().getName()+" inserte en la cola 2 el elemento "+elemento);
             cola2.poner(elemento);
-            //hayAlguienParaInsertar--;
-            //&&hayAlguienParaInsertar==0
-            if(cola1.esVacia()){//si no hay nadie mas para insertar y la cola de extraccion esta vacia entonces cambio la funcion de las colas
+            hayAlguienParaInsertar--;
+            //
+            if(cola1.esVacia()&&hayAlguienParaInsertar==0){//si no hay nadie mas para insertar y la cola de extraccion esta vacia entonces cambio la funcion de las colas
                 System.out.println("Ahora la cola para insertar es la cola 1");
                 estado=1;//cambio de estado, ahora la cola 1 es en la que se inserta.
             }
